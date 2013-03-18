@@ -1,0 +1,193 @@
+\ProvidesPackage{beamerinnerthemecolorblock}[2012/10/25]
+
+% Beamer theme by Bruno Grenet <bruno[dot]grenet[at]gmail[dot]com>
+% Oct. 2012
+%
+% based on the progressbar beamer theme by Sylvain Bouveret <sylvain[dot]bouveret[aT]cert[DoT]fr>
+% sep. 2010 version 0.42
+%
+% based on the LaTeX-Beamer package :
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\RequirePackage{tikz}
+\usetikzlibrary{fadings,shadows.blur}
+\RequirePackage{ifthen}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Processing options...
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\def\CB@headline{none}%
+\def\CB@frametitle{picture-section}%
+\def\CB@imagename{images/tree04}%
+\def\CB@titlepage{picture}%
+\define@key{CB}{headline}[none]{%
+  \def\CB@headline{#1}%
+}
+\define@key{CB}{frametitle}[picture]{%
+  \def\CB@frametitle{#1}%
+}
+\define@key{CB}{imagename}{%
+  \def\CB@imagename{#1}%
+  \pgfdeclareimage[width=0.12\textwidth,interpolate=true]{headlineimage}{\CB@imagename}
+}
+\define@key{CB}{titlepage}[picture]{%
+  \def\CB@titlepage{#1}%
+}
+
+\def\CBoptions#1{\setkeys{CB}{#1}}
+
+\def\insertintermediateframenumber{\inserttotalframenumber}
+
+
+% This piece of code is just to make the code Babel-compliant with every
+% language.
+% It comes from:
+% http://forum.mathematex.net/latex-f6/beamer-et-shorthandoff-t3851.html
+\makeatletter
+\newboolean{@twopt} \setboolean{@twopt}{false}
+\newcommand*{\twoptoff}{\ifnum \catcode`\;=13 \catcode`\;=12 \setboolean{@twopt}{true} \fi}
+\newcommand*{\twopton}{\if@twopt \catcode`\;=13 \setboolean{@twopt}{false}  \fi}
+%
+%
+
+\mode<presentation>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Blocks...
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newbox\CB@blockbox
+\newdimen\CB@boxheight
+\newdimen\CB@boxwidth
+
+% The ultimate trick to prevent the itemize-inside-blocks bug from happening...
+\let\CB@tempitemize=\itemize
+\def\CB@itemize{\ifhmode\else\vskip-0.85\topsep\fi\CB@tempitemize}
+% 
+
+%%% Colorblock's blocks %%%
+
+\newcommand{\defblock}[1][]{
+  \defbeamertemplate*{block \ifx#1\@empty\else#1\space\fi begin}{CB theme}
+  {
+    \setbox\CB@blockbox=\hbox to .98\textwidth\bgroup\vbox\bgroup\vskip-0.25\baselineskip\raggedright\begin{minipage}{.98\textwidth} \ifx\insertblocktitle\@empty\else{\usebeamerfont{block title}\usebeamercolor[fg]{block title\ifx#1\@empty\else\space#1\fi}\insertblocktitle\\[-0.3cm]% Just to be "babel-safe"
+      \twoptoff{}\tikz\draw[fg] (0, 0) -- (\textwidth, 0);\twopton{}}\fi\usebeamerfont{block body\ifx#1\@empty\else\space#1\fi}\ifx\insertblocktitle\@empty\else\global\let\itemize=\CB@itemize\fi \par
+      \setbeamercolor{itemize item}{parent=block title\ifx#1\@empty\else\space#1\fi}%
+      \setbeamercolor{enumerate item}{parent=block title\ifx#1\@empty\else\space#1\fi}%
+      \setbeamercolor{description item}{parent=block title\ifx#1\@empty\else\space#1\fi}%
+      \setbeamercolor{alerted text}{fg=block title\ifx#1\@empty\else\space#1\fi.fg}%
+  }
+  \defbeamertemplate*{block \ifx#1\@empty\else#1\space\fi end}{CB theme}
+  {
+    \vphantom{y}
+    \global\let\itemize=\CB@tempitemize\end{minipage}\vskip-0.25\baselineskip\egroup\egroup
+    \CB@boxwidth=\wd\CB@blockbox
+    \advance\CB@boxwidth by 0.5\baselineskip
+    \CB@boxheight=\ht\CB@blockbox
+    \advance\CB@boxheight by \dp\CB@blockbox
+    {\parbox[t]{0cm}{
+      \usebeamercolor{block title\ifx#1\@empty\else\space#1\fi}
+      \tikz[baseline=(current bounding box.north)]{\draw[draw=fg,fill=bg, rounded corners=2pt, blur shadow] (0, 0) rectangle (\CB@boxwidth, \CB@boxheight);} 
+    }}
+  {\parbox[t]{0cm}{
+      \vskip0.5\baselineskip
+      \ \hfill{\box\CB@blockbox}\hfill\ 
+    }}
+    %\vskip-1\baselineskip
+    \vspace{-1.5em}
+    \par
+  }
+}
+
+\defblock
+\defblock[example]
+\defblock[alerted]
+\defblock[red]
+\defblock[blue]
+\defblock[green]
+\defblock[color]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Frame title...
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\CB@separator{--}
+
+\ifx\CB@imagename\@relax
+\else
+\pgfdeclareimage[width=0.12\textwidth,interpolate=true]{headlineimage}{\CB@imagename}
+\fi
+\ifx\CB@frametitle\@relax
+\def\CB@frametitle{normal}
+\fi
+
+\defbeamertemplate*{frametitle}{CB theme}{
+\edef\tempa{normal}
+\ifx\CB@frametitle\tempa
+\begin{centering}
+  \edef\tempb{none}
+  \ifx\CB@headline\tempb
+    \vspace{-0.8em}%
+  \else
+    \vspace{-1.2em}
+    %\pgfuseshading{separationtitlepagelineshading}
+    {\usebeamercolor[fg]{section in head/foot} \rule{\textwidth}{.5pt}\vspace{-.3em}}
+  \fi
+  \textbf{\insertframetitle}
+  \vspace{.2em}
+  \par
+\end{centering}
+\else
+\edef\tempa{picture-subsection}
+\ifx\CB@frametitle\tempa
+\parbox[c]{0.13\textwidth}{\pgfuseimage{headlineimage}}
+\parbox[c]{0.85\textwidth}{
+  \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\ \else\insertsection\fi\ifx\insertsubsection\@empty\else\ \CB@separator\ \insertsubsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
+  \textbf{\vphantom{Hp}\insertframetitle}
+}
+\else
+\parbox[c]{0.13\textwidth}{\pgfuseimage{headlineimage}}
+\parbox[c]{0.85\textwidth}{
+  \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\ \else\insertsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
+  \textbf{\vphantom{Hp}\insertframetitle}
+}
+\fi
+\fi
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Items...
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{itemize item}[triangle]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}[square]
+\setbeamertemplate{section in toc}[sections numbered]
+
+\mode<handout>
+\setbeamertemplate{frametitle}{
+  \setbeamercolor{frametitle}{fg=structure.fg,bg=white}
+  \usebeamercolor{frametitle}
+  {\color{fg}\bf \insertframetitle}
+}
+
+\mode
+<all>
+

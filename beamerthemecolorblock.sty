@@ -1,0 +1,179 @@
+\ProvidesPackage{beamerthemecolorblock}[2012/10/25]
+
+% Beamer theme by Bruno Grenet <bruno[dot]grenet[at]ens-lyon[dot]org>
+% Oct. 2012
+%
+% based on the progressbar beamer theme by Sylvain Bouveret <sylvain[dot]bouveret[aT]cert[DoT]fr>
+% sep. 2010 version 0.42
+%
+% based on the LaTeX-Beamer package :
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\RequirePackage{tikz}
+\RequirePackage{bibunits}
+
+
+\usecolortheme{colorblock}
+\useinnertheme{colorblock}
+\usefonttheme{colorblock}
+\useoutertheme{colorblock}
+
+\setbeamertemplate{navigation symbols}{}
+
+\AtBeginDocument{%
+  \typeout{..................................................................}
+  \typeout{You are using the colorblock beamer theme (Bruno G.)}
+  \typeout{Version: Oct. 2012.}
+  \typeout{..................................................................}
+}
+
+\def\insertintermediateframenumber{\inserttotalframenumber}
+
+\renewcommand{\appendix}[1][0void0]
+{
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  % This piece of code is supposed to introduce a bias in the
+  % number of slides
+  \makeatletter
+  \immediate\write\@auxout{\string\@writefile{nav}%
+    {\noexpand\headcommand{\noexpand\def\noexpand\insertintermediateframenumber{\the\c@framenumber}}}}
+  \renewcommand{\insertintermediateframenumber}{\inserttotalframenumber}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  
+  \def\tmparg{#1}
+  \def\tmpargref{0void0}
+  \ifx\tmparg\tmpargref\else
+  \begin{frame}[plain]
+    \vfill
+    \begin{center}
+      \usebeamerfont{title}\usebeamercolor{title}{\color{fg}\ #1\ }
+    \end{center}
+    \vfill
+  \end{frame}
+  \fi
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  % We recompute the progressbar step and the current position
+
+  \CB@numer=1
+  \CB@denom=\insertintermediateframenumber
+  \advance\CB@denom by -1
+  \CB@tmpresult=\CB@barlength
+  \multiply\CB@tmpresult by \CB@numer
+  \ifnum\CB@denom=0\else\divide\CB@tmpresult by \CB@denom\fi
+  \global\CB@stepbar=\CB@tmpresult
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+  \makeatother
+}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+  % \newcommand's
+
+  \newcommand<>\red[1]{{\usebeamercolor{red text}\color#2{fg} #1}}
+  \newcommand<>\green[1]{{\usebeamercolor{green text}\color#2{fg} #1}}
+  \newcommand<>\blue[1]{{\usebeamercolor{blue text}\color#2{fg} #1}}
+  \newcommand<>\Red[1]{{\usebeamercolor{red text}\color#2{fg}\bfseries #1}}
+  \newcommand<>\Green[1]{{\usebeamercolor{green text}\color#2{fg}\bfseries #1}}
+  \newcommand<>\Blue[1]{{\usebeamercolor{blue text}\color#2{fg}\bfseries #1}}
+
+  
+  \newenvironment<>{colorblock}[3][\textwidth]{%
+    \begin{minipage}{#1}%
+    \begin{actionenv}#4%
+      \def\insertblocktitle{#2}%
+      \par%
+      \mode<presentation>{%\usebeamerfont{block}%
+        \setbeamercolor{local structure}{fg=#3}}%
+      \usebeamertemplate{block color begin}}
+    {\par%
+      \usebeamertemplate{block color end}%
+    \end{actionenv}%
+    \end{minipage}}
+    
+    \newenvironment<>{blueblock}[2][\textwidth]{%
+        \begin{colorblock}#3[#1]{#2}{CB@blue}%
+        }{%
+        \end{colorblock}%
+    }
+    \newenvironment<>{redblock}[2][\textwidth]{%
+        \begin{colorblock}#3[#1]{#2}{CB@red}%
+        }{%
+        \end{colorblock}%
+    }
+    \newenvironment<>{greenblock}[2][\textwidth]{%
+        \begin{colorblock}#3[#1]{#2}{CB@green}%
+        }{%
+        \end{colorblock}%
+    }
+
+  \newenvironment<>{theorem*}[1][]
+  {
+      \begin{redblock}#2{#1}
+      %\itshape
+  }{%
+      \end{redblock}%
+  }
+  \newenvironment<>{definition*}[1][]
+  {
+      \begin{greenblock}#2{#1}
+  }{
+      \end{greenblock}
+  }
+  \renewenvironment<>{lemma*}[1][]
+  {
+      \begin{redblock}#2{#1}
+  }{%
+      \end{redblock}%
+  }
+  \renewenvironment<>{proposition*}[1][]
+  {
+      %\setbeamercolor{block title red}{fg=brown}%
+      \begin{colorblock}#2{#1}{brown}
+  }{%
+      \end{colorblock}%
+  }
+  
+  \newcommand\@ddArg[1]{\ifx#1\@empty\else~(#1)\fi}
+  \renewenvironment<>{theorem}[1][]
+  {
+      \begin{theorem*}#2[Theorem\@ddArg{#1}]
+  }{%
+      \end{theorem*}%
+  }
+  \renewenvironment<>{lemma}[1][]
+  {
+      \begin{lemma*}#2[Lemma\@ddArg{#1}]
+  }{%
+      \end{lemma*}%
+  }
+  \renewenvironment<>{proposition}[1][]
+  {
+      \begin{proposition*}#2[Proposition\@ddArg{#1}]
+  }{%
+      \end{proposition*}%
+  }
+  \renewenvironment<>{corollary}[1][]
+  {
+      \begin{theorem*}#2[Corollary\@ddArg{#1}]
+  }{
+      \end{theorem*}
+  }
+  \newenvironment<>{conjecture}[1][]
+  {
+      \begin{blueblock}#2{Conjecture\@ddArg{#1}}
+  }{
+      \end{blueblock}
+  }
+  \renewenvironment<>{definition}[1][]
+  {
+      \begin{definition*}#2[Definition\@ddArg{#1}]
+  
+  }{
+      \end{definition*}
+  }
+

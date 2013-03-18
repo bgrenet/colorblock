@@ -1,0 +1,90 @@
+\ProvidesPackage{beamercolorthemecolorblock}[2012/10/25]
+
+% Beamer theme by Bruno Grenet <bruno[dot]grenet[at]gmail[dot]com>
+% Oct. 2012
+%
+% based on the progressbar beamer theme by Sylvain Bouveret <sylvain[dot]bouveret[aT]cert[DoT]fr>
+% sep. 2010 version 0.42
+%
+% based on the LaTeX-Beamer package :
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Some color definitions...
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\edef\tempa{orange}
+\ifx\CBcolors\tempa
+    \definecolor{CB@fg}{rgb}{0, 0, 0}    % Foreground color
+    \definecolor{CB@bg}{RGB}{255,238,170}% Background color
+    \definecolor{CB@tc}{RGB}{124,28,5}%{0.7,0,0}%{0.4,0.4,0.4}%    % Title color
+    \definecolor{CB@red}{rgb}{0.7,0,0}
+    \definecolor{CB@green}{rgb}{0,0.6,0}
+    \definecolor{CB@blue}{rgb}{0,0,0.6}
+\else
+    \definecolor{CB@fg}{rgb}{0, 0, 0}      % Foreground color
+    \definecolor{CB@bg}{rgb}{0.7, 0.7, 0.7}% Background color
+    \definecolor{CB@tc}{rgb}{1,1,1}        % Title color
+    \definecolor{CB@red}{rgb}{0.7,0,0}
+    \definecolor{CB@green}{rgb}{0,0.6,0}
+    \definecolor{CB@blue}{rgb}{0,0,0.6}
+\fi
+
+\mode<presentation>
+
+\setbeamercolor{palette primary}{fg=CB@fg,bg=CB@bg}
+\setbeamercolor{palette secundary}{fg=CB@tc,bg=CB@fg!70!white}
+\setbeamercolor{palette tertiary}{fg=CB@fg,bg=CB@bg}
+\setbeamercolor{palette quaternary}{fg=CB@fg,bg=CB@bg}
+
+\setbeamercolor{structure}{fg=CB@fg,bg=white}
+\setbeamercolor{local structure}{fg=CB@red}
+
+\setbeamercolor{background canvas}{parent=palette primary}
+
+\setbeamercolor{section in head/foot}{fg=normal text.fg!50}%parent=palette secundary}
+\setbeamercolor{frametitle}{bg=CB@fg,fg=CB@tc} %CB@bg!10!white} %CB@fg}
+\setbeamercolor{section in toc}{fg=CB@tc}
+
+\setbeamercolor{alerted text}{fg=CB@red,bg=bg}
+\setbeamercolor{example text}{fg=CB@green,bg=bg}
+\setbeamercolor{red text}{fg=CB@red,bg=bg}
+\setbeamercolor{blue text}{fg=CB@blue,bg=bg}
+\setbeamercolor{green text}{fg=CB@green,bg=bg}
+
+\setbeamercolor{block title}{use=structure,fg=CB@tc,bg=CB@bg!50!white} %70!black}
+\setbeamercolor{block title alerted}{fg=alerted text.fg,bg=CB@bg!50!white} %,bg=alerted text.fg!10!bg}
+\setbeamercolor{block title example}{fg=example text.fg,bg=CB@bg!50!white} %,bg=example text.fg!10!bg}
+\setbeamercolor{block title red}{fg=CB@red,bg=CB@bg!50!white} 
+\setbeamercolor{block title green}{fg=CB@green,bg=CB@bg!50!white} 
+\setbeamercolor{block title blue}{fg=CB@blue,bg=CB@bg!50!white} 
+\setbeamercolor{block title color}{parent=local structure,bg=CB@bg!50!white} 
+
+\setbeamercolor{block body}{fg=normal text.fg,bg=CB@bg!50!white}
+\setbeamercolor{block body alerted}{parent=block body} %, fg=normal text.fg,bg=alerted text.fg!10!bg}
+\setbeamercolor{block body example}{parent=block body} %, fg=normal text.fg,bg=example text.fg!10!bg}
+\setbeamercolor{block body red}{parent=block body}
+\setbeamercolor{block body green}{parent=block body}
+\setbeamercolor{block body blue}{parent=block body}
+\setbeamercolor{block body color}{parent=block body}
+
+
+\setbeamercolor{title}{fg=CB@tc,bg=white}
+\setbeamercolor{subtitle}{parent=title}
+
+\setbeamercolor{item}{fg=CB@tc}
+
+\mode
+<all>
+
+
+
+\makeatother

@@ -1,0 +1,47 @@
+\ProvidesPackage{beamerfontthemecolorblock}[2012/10/25]
+
+% Beamer theme by Bruno Grenet <bruno[dot]grenet[at]gmail[dot]com>
+% Oct. 2012
+%
+% based on the progressbar beamer theme by Sylvain Bouveret <sylvain[dot]bouveret[aT]cert[DoT]fr>
+% sep. 2010 version 0.42
+%
+% based on the LaTeX-Beamer package :
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\RequirePackage{xspace}
+
+\mode<presentation>
+
+\usefonttheme{default}
+
+%\setbeamerfont{normal text}{size=\small} % ignored currently
+
+
+\setbeamerfont{bibliography entry author}{shape=\upshape,series=\bfseries,size=\scriptsize}%
+\setbeamerfont{bibliography entry title}{shape=\upshape,size=\tiny,series=\mdseries}
+\setbeamerfont{bibliography entry journal}{shape=\upshape,size=\tiny,series=\mdseries}
+\setbeamerfont{bibliography entry note}{shape=\upshape,size=\tiny,series=\mdseries}
+
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\scriptsize}
+
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries,parent={structure,block body}}
+
+\setbeamerfont{section in head/foot}{size=\tiny,series=\bfseries}
+\renewcommand{\emph}[1]{{\usebeamercolor[fg]{local structure}\bfseries #1}\xspace}
+
+\setbeamerfont{section in toc}{parent=structure,series=\bfseries}
+
+\setbeamerfont{title}{size=\normalsize,series=\bfseries,parent=structure}
+\setbeamerfont{subtitle}{size=\scriptsize,series=\bfseries,parent=structure}
+\setbeamerfont{author}{size=\scriptsize,series=\bfseries,parent=structure}
+\setbeamerfont{institute}{size=\tiny,series=\mdseries,parent=structure}
+\setbeamerfont{date}{size=\scriptsize,series=\mdseries,parent=structure}
+
+\mode
+<all>
