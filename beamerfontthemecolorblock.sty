@@ -33,7 +33,8 @@
 \setbeamerfont{block title}{size=\normalsize,series=\bfseries,parent={structure,block body}}
 
 \setbeamerfont{section in head/foot}{size=\tiny,series=\bfseries}
-\renewcommand{\emph}[1]{{\usebeamercolor[fg]{local structure}\bfseries #1}\xspace}
+%\renewcommand{\emph}[1]{{\usebeamercolor[fg]{local structure}\bfseries #1}\xspace}
+\renewcommand{\emph}[2][fg]{{\usebeamercolor{local structure}\color{#1}\bfseries #2}\xspace}
 
 \setbeamerfont{section in toc}{parent=structure,series=\bfseries}
 

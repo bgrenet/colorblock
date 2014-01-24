@@ -13,7 +13,7 @@
 % of the GNU Public License, version 2.
 
 \RequirePackage{tikz}
-\usetikzlibrary{fadings,shadows.blur}
+\usetikzlibrary{fadings}%,shadows.blur}
 \RequirePackage{ifthen}
 
 
@@ -98,7 +98,7 @@
     \advance\CB@boxheight by \dp\CB@blockbox
     {\parbox[t]{0cm}{
       \usebeamercolor{block title\ifx#1\@empty\else\space#1\fi}
-      \tikz[baseline=(current bounding box.north)]{\draw[draw=fg,fill=bg, rounded corners=2pt, blur shadow] (0, 0) rectangle (\CB@boxwidth, \CB@boxheight);} 
+      \tikz[baseline=(current bounding box.north)]{\draw[draw=fg,fill=bg, rounded corners=2pt] (0, 0) rectangle (\CB@boxwidth, \CB@boxheight);} 
     }}
   {\parbox[t]{0cm}{
       \vskip0.5\baselineskip
@@ -141,7 +141,7 @@
 \begin{centering}
   \edef\tempb{none}
   \ifx\CB@headline\tempb
-    \vspace{-0.8em}%
+    \vspace{-1.4em}%
   \else
     \vspace{-1.2em}
     %\pgfuseshading{separationtitlepagelineshading}
@@ -151,6 +151,22 @@
   \vspace{.2em}
   \par
 \end{centering}
+\else
+\edef\tempa{right}
+\ifx\CB@frametitle\tempa
+\begin{flushright}
+  \edef\tempb{none}
+  \ifx\CB@headline\tempb
+    \vspace{-1.4em}%
+  \else
+    \vspace{-1.2em}
+    %\pgfuseshading{separationtitlepagelineshading}
+    {\usebeamercolor[fg]{section in head/foot} \rule{\textwidth}{.5pt}\vspace{-.3em}}
+  \fi
+  \textbf{\insertframetitle}
+  %\vspace{.2em}
+  \par
+\end{flushright}
 \else
 \edef\tempa{picture-subsection}
 \ifx\CB@frametitle\tempa
@@ -165,6 +181,7 @@
   \usebeamercolor{frametitle}{\scriptsize \ifx\insertsection\@empty\ \else\insertsection\fi}\\[-0.3cm]\rule{0.7\textwidth}{0.5pt}\par%\vskip-1cm\rule{0.7\textwidth}{0.5pt}\par
   \textbf{\vphantom{Hp}\insertframetitle}
 }
+\fi
 \fi
 \fi
 }

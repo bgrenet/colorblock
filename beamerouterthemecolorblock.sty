@@ -225,39 +225,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\defbeamertemplate*{title page}{CB theme}{
-  \edef\tempa{picture}
-  \ifx\CB@titlepage\tempa
-  \vfill
-  \parbox{0.28\textwidth}{
-    \pgfimage[width=0.27\textwidth]{\CB@imagename}
-  }\hfill
-  \parbox{0.7\textwidth}{
-    \begin{center}
-      {\usebeamerfont{title}\usebeamercolor{title}{\color{fg}\inserttitle}}
-      \ifx\insertsubtitle\@empty\\[\baselineskip]
-      \else{\\\usebeamerfont{subtitle}\usebeamercolor{subtitle}{\color{fg}\insertsubtitle}}\\[\baselineskip]\fi
-      \hrule\vskip\baselineskip
-      \ifx\insertauthor\@empty\ \\
-      \else{\usebeamerfont{author}\usebeamercolor{author}{\color{fg}\insertauthor}}\\\fi
-      \ifx\insertinstitute\@empty 
-      \else{\usebeamerfont{institute}\usebeamercolor{institute}{\color{fg}\insertinstitute}}\\\fi
-      \ifx\insertdate\@empty\ \\
-      \else{\usebeamerfont{date}\usebeamercolor{date}{\color{fg}\insertdate}}\\\fi
-      \insertlogo
-    \end{center}
-  }\vfill
-  \else
-  \pgfdeclarehorizontalshading{separationtitlepagelineshading}{0.5pt}{color(0cm)=(bg); 
-    color(0.5\textwidth)=(structure.fg); color(\textwidth)=(bg)}
-  \begin{center}
+\defbeamertemplate*{title page}{CB theme}{%
+  \pgfdeclarehorizontalshading{separationtitlepagelineshading}{0.5pt}{color(0cm)=(bg);%
+    color(0.5\textwidth)=(structure.fg); color(\textwidth)=(bg)}%
+  \begin{center}%
     \vfill
     {\usebeamerfont{title}\usebeamercolor{title}{\color{fg}\inserttitle}}
 
     \ifx\insertsubtitle\@empty 
     \else{\usebeamerfont{subtitle}\usebeamercolor{subtitle}{\color{fg}\insertsubtitle}}\\[\baselineskip]\fi
 
-    \pgfuseshading{separationtitlepagelineshading}
+    %\pgfornament[color=bg,width=.6\textwidth]{89}\\ %\pgfuseshading{separationtitlepagelineshading}
     \ifx\insertauthor\@empty\ \\
     \else{\usebeamerfont{author}\usebeamercolor{author}{\color{fg}\insertauthor}}\\\fi
     \ifx\insertinstitute\@empty 
@@ -265,10 +243,9 @@
     \ifx\insertdate\@empty\ \\
     \else{\usebeamerfont{date}\usebeamercolor{date}{\color{fg}\insertdate}}\\\fi
     \insertlogo
-    \pgfuseshading{separationtitlepagelineshading}
+    %\pgfornament[color=bg,width=.6\textwidth]{89}\\ %\pgfuseshading{separationtitlepagelineshading}
     \vfill
   \end{center}
-  \fi
 }
 
 \setbeamertemplate{title page}[CB theme]
